@@ -59,7 +59,7 @@
 - **빨래방 승인 관리**
     - 가맹점주의 빨래방 등록/수정/삭제 요청 승인 또는 거절
 ## ERD 
-![ERD](doc/img/SelfWashERD.png)
+![ERD](doc/img/SelfWash_erd.png)
 
 ## Trouble Shooting
 [go to the trouble shooting section](doc/TROUBLE_SHOOTING.md)
