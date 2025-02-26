@@ -1,5 +1,8 @@
 package com.zerobase.SelfWash.member.controller;
 
+import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
+import static com.zerobase.SelfWash.member.domain.type.MemberType.OWNER;
+
 import com.zerobase.SelfWash.member.application.SignUpApplication;
 import com.zerobase.SelfWash.member.domain.form.AdminSignUpForm;
 import com.zerobase.SelfWash.member.domain.form.SignUpForm;
@@ -21,29 +24,32 @@ public class SignUpController {
 
   @PostMapping("/customer")
   public ResponseEntity<String> customerSignUp(@RequestBody SignUpForm signUpForm) {
-    return ResponseEntity.ok(signUpApplication.signUp("customer",signUpForm));
+    signUpApplication.signUp(CUSTOMER,signUpForm);
+    return ResponseEntity.ok("회원가입이 완료되었습니다.");
   }
 
   @GetMapping("/verify/customer")
   public ResponseEntity<String> customerVerify(@RequestParam String email, @RequestParam String key) {
-    signUpApplication.verifyEmail("customer",email, key);
+    signUpApplication.verifyEmail(CUSTOMER,email, key);
     return ResponseEntity.ok("이메일 인증이 완료되었습니다.");
   }
 
   @PostMapping("/owner")
   public ResponseEntity<String> ownerSignUp(@RequestBody SignUpForm signUpForm) {
-    return ResponseEntity.ok(signUpApplication.signUp("owner",signUpForm));
+    signUpApplication.signUp(OWNER,signUpForm);
+    return ResponseEntity.ok("회원가입이 완료되었습니다.");
   }
 
   @GetMapping("/verify/owner")
   public ResponseEntity<String> ownerVerify(@RequestParam String email, @RequestParam String key) {
-    signUpApplication.verifyEmail("owner",email, key);
+    signUpApplication.verifyEmail(OWNER,email, key);
     return ResponseEntity.ok("이메일 인증이 완료되었습니다.");
   }
 
   @PostMapping("/admin")
   public ResponseEntity<String> adminSignUp(@RequestBody AdminSignUpForm signUpForm) {
-    return ResponseEntity.ok(signUpApplication.adminSignUp(signUpForm));
+    signUpApplication.adminSignUp(signUpForm);
+    return ResponseEntity.ok("회원가입이 완료되었습니다.");
   }
 
 

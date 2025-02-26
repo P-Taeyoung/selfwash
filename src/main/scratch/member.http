@@ -3,7 +3,7 @@ POST http://localhost:8080/signup/customer
 Content-Type: application/json
 
 {
-  "email": "pty10510@gmail.com",
+  "email": "emfprhs105@naver.com",
   "password": "1234",
   "phone": "010-1234-1234",
   "name": "james",
@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ### 고객 이메일 인증
-GET http://localhost:8080/signup/verify/customer?email=pty10510@gmail.com&key=f39bcce3-b314-4e61-ae63-3ddfddc5c08a
+GET http://localhost:8080/signup/verify/customer?email=emfprhs105@naver.com&key=f39bcce3-b314-4e61-ae63-3ddfddc5c08a
 
 ### 점주 회원가입
 POST http://localhost:8080/signup/owner

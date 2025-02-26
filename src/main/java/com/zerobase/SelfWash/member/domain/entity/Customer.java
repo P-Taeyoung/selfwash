@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends BaseEntity {
+public class Customer extends BaseEntity  implements Member {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
