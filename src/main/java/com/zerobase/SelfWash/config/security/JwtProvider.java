@@ -1,5 +1,7 @@
 package com.zerobase.SelfWash.config.security;
 
+import static com.zerobase.SelfWash.member.domain.type.MemberType.ADMIN;
+
 import com.zerobase.SelfWash.config.security.util.Aes256Util;
 import com.zerobase.SelfWash.member.application.SignInApplication;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
@@ -27,10 +29,10 @@ public class JwtProvider {
 
   private final SignInApplication signInApplication;
 
-  private final Key secretKey = Keys.hmacShaKeyFor(System.getenv("TOKEN_SECRETKEY").getBytes(
+  private static final Key secretKey = Keys.hmacShaKeyFor(System.getenv("TOKEN_SECRETKEY").getBytes(
       StandardCharsets.UTF_8));
 
-  private final long tokenValidTime = 1000L * 60 * 60 * 24;
+  private static final long tokenValidTime = 1000L * 60 * 60 * 24;
 
   public String createToken(String memberId, MemberType memberType) {
 
@@ -60,7 +62,7 @@ public class JwtProvider {
 
     UserDetails userDetails;
 
-    if (getMemberType(token).equals(MemberType.ADMIN)) {
+    if (getMemberType(token) == ADMIN) {
       userDetails = signInApplication.loadAdminByAdminId(Aes256Util.decrypt(parseToken(token).getSubject()));
     } else {
       userDetails = signInApplication.loadMemberByMemberId(Aes256Util.decrypt(parseToken(token).getSubject())
@@ -71,7 +73,7 @@ public class JwtProvider {
   }
 
   private MemberType getMemberType(String token) {
-    return MemberType.valueOf((String) parseToken(token).get(KEY_ROLES));
+    return MemberType.valueOf(parseToken(token).get(KEY_ROLES, String.class));
   }
 
   public Claims parseToken(String token) {
@@ -82,7 +84,7 @@ public class JwtProvider {
           .parseClaimsJws(token)
           .getBody();
     } catch (ExpiredJwtException e) {
-      log.error(e.getMessage());
+      log.error("{} : {}", e, e.getMessage());
       return e.getClaims();
     }
   }

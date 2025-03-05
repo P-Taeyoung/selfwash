@@ -2,12 +2,11 @@ package com.zerobase.SelfWash.member.service.signin.impl;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.OWNER;
 
-import com.zerobase.SelfWash.config.security.JwtProvider;
 import com.zerobase.SelfWash.member.domain.entity.Owner;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.repository.OwnerRepository;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
-import com.zerobase.SelfWash.member.service.signin.SignInService;
+import com.zerobase.SelfWash.member.service.signin.MemberSignInService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class OwnerSignInServiceImpl implements SignInService {
+public class OwnerSignInServiceImpl implements MemberSignInService {
 
   private final OwnerRepository ownerRepository;
 

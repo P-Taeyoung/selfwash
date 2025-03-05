@@ -5,23 +5,14 @@ import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
 import static com.zerobase.SelfWash.member.domain.type.MemberType.OWNER;
 
 import com.zerobase.SelfWash.config.security.JwtProvider;
-import com.zerobase.SelfWash.config.security.util.Aes256Util;
 import com.zerobase.SelfWash.member.application.SignInApplication;
-import com.zerobase.SelfWash.member.application.SignUpApplication;
-import com.zerobase.SelfWash.member.domain.entity.Owner;
-import com.zerobase.SelfWash.member.domain.form.AdminSignUpForm;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController

@@ -3,13 +3,12 @@ package com.zerobase.SelfWash.member.service.signin;
 import com.zerobase.SelfWash.member.domain.entity.Member;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-public interface SignInService extends UserDetailsService {
+public interface MemberSignInService extends UserDetailsService {
 
   boolean support(MemberType type);
 

@@ -1,22 +1,22 @@
 package com.zerobase.SelfWash.member.service.signup;
 
 import com.zerobase.SelfWash.member.domain.entity.Member;
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
+import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public interface SignUpService {
+public interface MemberSignUpService {
 
   boolean support(MemberType type);
 
-  void signUp(SignUpForm form);
+  void signUp(MemberSignUpForm form);
 
   void verifyEmail(String email, String key);
 
 
-  default void validateEmail(SignUpForm form
+  default void validateEmail(MemberSignUpForm form
       , Predicate<String> existsByEmail) {
     if (existsByEmail.test(form.getEmail())) {
       throw new RuntimeException("이미 존재하는 이메일 입니다.");

@@ -1,6 +1,6 @@
 package com.zerobase.SelfWash.member.domain.entity;
 
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
+import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +37,7 @@ public class Customer extends BaseEntity  implements Member {
   private String emailAuthKey;
   private boolean emailAuthYn;
 
-  public static Customer signUpFrom(SignUpForm signUpForm) {
+  public static Customer signUpFrom(MemberSignUpForm signUpForm) {
     return Customer.builder()
         .email(signUpForm.getEmail())
         .password(BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt()))

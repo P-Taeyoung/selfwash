@@ -3,17 +3,17 @@ package com.zerobase.SelfWash.member.service.signup.impl;
 import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
 
 import com.zerobase.SelfWash.member.domain.entity.Customer;
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
+import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
 import com.zerobase.SelfWash.member.domain.repository.CustomerRepository;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
-import com.zerobase.SelfWash.member.service.signup.SignUpService;
+import com.zerobase.SelfWash.member.service.signup.MemberSignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerSignUpServiceImpl implements SignUpService {
+public class CustomerSignUpServiceImpl implements MemberSignUpService {
 
   private final CustomerRepository customerRepository;
 
@@ -23,7 +23,7 @@ public class CustomerSignUpServiceImpl implements SignUpService {
   }
 
   @Override
-  public void signUp(SignUpForm form) {
+  public void signUp(MemberSignUpForm form) {
     validateEmail(form, customerRepository::existsByEmail);
     customerRepository.save(Customer.signUpFrom(form));
   }
