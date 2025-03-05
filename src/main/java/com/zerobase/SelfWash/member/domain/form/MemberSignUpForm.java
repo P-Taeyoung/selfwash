@@ -8,12 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class AdminSignUpForm {
-  private String adminId;
+public class MemberSignUpForm {
+  private String email;
   private String password;
   private String phone;
   private String name;
+  private String account;
+  private String emailAuthKey;
 }

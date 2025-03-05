@@ -5,7 +5,7 @@ import static com.zerobase.SelfWash.member.domain.type.MemberType.OWNER;
 
 import com.zerobase.SelfWash.member.application.SignUpApplication;
 import com.zerobase.SelfWash.member.domain.form.AdminSignUpForm;
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
+import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ public class SignUpController {
   private final SignUpApplication signUpApplication;
 
   @PostMapping("/customer")
-  public ResponseEntity<String> customerSignUp(@RequestBody SignUpForm signUpForm) {
+  public ResponseEntity<String> customerSignUp(@RequestBody MemberSignUpForm signUpForm) {
     signUpApplication.signUp(CUSTOMER,signUpForm);
     return ResponseEntity.ok("회원가입이 완료되었습니다.");
   }
@@ -35,7 +35,7 @@ public class SignUpController {
   }
 
   @PostMapping("/owner")
-  public ResponseEntity<String> ownerSignUp(@RequestBody SignUpForm signUpForm) {
+  public ResponseEntity<String> ownerSignUp(@RequestBody MemberSignUpForm signUpForm) {
     signUpApplication.signUp(OWNER,signUpForm);
     return ResponseEntity.ok("회원가입이 완료되었습니다.");
   }

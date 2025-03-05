@@ -1,0 +1,26 @@
+### 고객 로그인
+POST http://localhost:8080/signin/customer
+Content-Type: application/json
+
+{
+  "memberIdOrAdminId" : "emfprhs105@naver.com",
+  "password": "1234"
+}
+
+### 점주 로그인
+POST http://localhost:8080/signin/owner
+Content-Type: application/json
+
+{
+  "memberIdOrAdminId" : "pty10510@gmail.com",
+  "password": "1234"
+}
+
+### 관리자 로그인
+POST http://localhost:8080/signin/admin
+Content-Type: application/json
+
+{
+  "memberIdOrAdminId" : "pty10510@gmail.com",
+  "password": "1234"
+}

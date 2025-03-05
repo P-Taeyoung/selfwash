@@ -11,11 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SignUpForm {
-  private String email;
+public class SignInForm {
+  private String memberIdOrAdminId;
   private String password;
-  private String phone;
-  private String name;
-  private String account;
-  private String emailAuthKey;
 }
