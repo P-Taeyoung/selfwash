@@ -8,12 +8,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class AdminSignUpForm {
-  private String adminId;
+public class SignInForm {
+  private String memberIdOrAdminId;
   private String password;
-  private String phone;
-  private String name;
 }

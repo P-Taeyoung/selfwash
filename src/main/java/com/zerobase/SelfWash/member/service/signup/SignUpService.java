@@ -1,4 +1,4 @@
-package com.zerobase.SelfWash.member.service;
+package com.zerobase.SelfWash.member.service.signup;
 
 import com.zerobase.SelfWash.member.domain.entity.Member;
 import com.zerobase.SelfWash.member.domain.form.SignUpForm;

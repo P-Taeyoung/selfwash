@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 @Builder
@@ -39,8 +40,7 @@ public class Customer extends BaseEntity  implements Member {
   public static Customer signUpFrom(SignUpForm signUpForm) {
     return Customer.builder()
         .email(signUpForm.getEmail())
-        //TODO 나중에 BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt()) 로 변경
-        .password(signUpForm.getPassword())
+        .password(BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt()))
         .phone(signUpForm.getPhone())
         .name(signUpForm.getName())
         .balance(0)

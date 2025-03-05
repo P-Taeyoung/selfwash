@@ -1,9 +1,11 @@
 package com.zerobase.SelfWash.member.domain.entity;
 
-import com.zerobase.SelfWash.member.domain.form.SignUpForm;
+import lombok.Getter;
+
 
 public interface Member {
   boolean isEmailAuthYn();
   String getEmailAuthKey();
+  String getPassword();
   void setEmailAuthYn(boolean emailAuthYn);
 }

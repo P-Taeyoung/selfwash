@@ -1,4 +1,4 @@
-package com.zerobase.SelfWash.member.service.impl;
+package com.zerobase.SelfWash.member.service.signup.impl;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
 
@@ -6,7 +6,7 @@ import com.zerobase.SelfWash.member.domain.entity.Customer;
 import com.zerobase.SelfWash.member.domain.form.SignUpForm;
 import com.zerobase.SelfWash.member.domain.repository.CustomerRepository;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
-import com.zerobase.SelfWash.member.service.SignUpService;
+import com.zerobase.SelfWash.member.service.signup.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
