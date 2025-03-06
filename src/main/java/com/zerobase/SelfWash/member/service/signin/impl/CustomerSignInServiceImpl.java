@@ -2,12 +2,12 @@ package com.zerobase.SelfWash.member.service.signin.impl;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
 
-import com.zerobase.SelfWash.member.domain.dto.MemberDto;
+import com.zerobase.SelfWash.member.domain.dto.UserDto;
 import com.zerobase.SelfWash.member.domain.entity.Customer;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.repository.CustomerRepository;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
-import com.zerobase.SelfWash.member.service.signin.MemberSignInService;
+import com.zerobase.SelfWash.member.service.signin.UserSignInService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerSignInServiceImpl implements MemberSignInService {
+public class CustomerSignInServiceImpl implements UserSignInService {
 
   private final CustomerRepository customerRepository;
 
@@ -30,7 +30,7 @@ public class CustomerSignInServiceImpl implements MemberSignInService {
   }
 
   @Override
-  public MemberDto signIn(SignInForm signInForm) {
+  public UserDto signIn(SignInForm signInForm) {
     return verifySignIn(signInForm, customerRepository::findByEmail);
   }
 

@@ -28,7 +28,7 @@ public class SignInController {
   public ResponseEntity<String> customerSignIn(@RequestBody SignInForm signInForm) {
 
     return ResponseEntity.ok(jwtProvider.createToken(
-        signInApplication.memberSignIn(CUSTOMER, signInForm).getId(),
+        signInApplication.userSignIn(CUSTOMER, signInForm).getId(),
         signInForm.getMemberIdOrAdminId(), CUSTOMER));
   }
 
@@ -36,7 +36,7 @@ public class SignInController {
   public ResponseEntity<String> ownerSignIn(@RequestBody SignInForm signInForm) {
 
     return ResponseEntity.ok(jwtProvider.createToken(
-        signInApplication.memberSignIn(OWNER, signInForm).getId(),
+        signInApplication.userSignIn(OWNER, signInForm).getId(),
         signInForm.getMemberIdOrAdminId(), OWNER));
   }
 

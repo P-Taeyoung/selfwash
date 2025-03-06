@@ -1,11 +1,11 @@
 package com.zerobase.SelfWash.member.application;
 
 import com.zerobase.SelfWash.member.components.MailComponent;
-import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
+import com.zerobase.SelfWash.member.domain.form.UserSignUpForm;
 import com.zerobase.SelfWash.member.domain.form.AdminSignUpForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
 import com.zerobase.SelfWash.member.service.signup.AdminSignUpService;
-import com.zerobase.SelfWash.member.service.signup.MemberSignUpService;
+import com.zerobase.SelfWash.member.service.signup.UserSignUpService;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -15,25 +15,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SignUpApplication {
 
-  private final List<MemberSignUpService> memberSignUpServices;
+  private final List<UserSignUpService> userSignUpServices;
   private final AdminSignUpService adminSignUpService;
   private final MailComponent mailComponent;
 
-  public void signUp(MemberType type, MemberSignUpForm signUpForm) {
-    MemberSignUpService memberSignUpService = getSignUpService(type);
+  public void signUp(MemberType type, UserSignUpForm signUpForm) {
+    UserSignUpService userSignUpService = getSignUpService(type);
 
     String key = UUID.randomUUID().toString();
     signUpForm.setEmailAuthKey(key);
-    memberSignUpService.signUp(signUpForm);
+    userSignUpService.signUp(signUpForm);
 
     sendMail(type, signUpForm.getEmail(), key);
 
   }
 
   public void verifyEmail(MemberType type ,String email, String key) {
-    MemberSignUpService memberSignUpService = getSignUpService(type);
+    UserSignUpService userSignUpService = getSignUpService(type);
 
-    memberSignUpService.verifyEmail(email, key);
+    userSignUpService.verifyEmail(email, key);
   }
 
   public void adminSignUp(AdminSignUpForm adminSignUpForm) {
@@ -47,8 +47,8 @@ public class SignUpApplication {
     mailComponent.sendMail(email, subject, text);
   }
 
-  private MemberSignUpService getSignUpService(MemberType type) {
-    return memberSignUpServices.stream().filter(memberSignUpService -> memberSignUpService.support(type))
+  private UserSignUpService getSignUpService(MemberType type) {
+    return userSignUpServices.stream().filter(userSignUpService -> userSignUpService.support(type))
         .findFirst()
         .orElseThrow(() -> new RuntimeException("회원가입 유형이 유효한 값이 아닙니다."));
   }

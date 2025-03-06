@@ -66,7 +66,7 @@ public class JwtProvider {
     if (getMemberType(token) == ADMIN) {
       userDetails = signInApplication.loadAdminByAdminId(Aes256Util.decrypt(parseToken(token).getSubject()));
     } else {
-      userDetails = signInApplication.loadMemberByMemberId(Aes256Util.decrypt(parseToken(token).getSubject())
+      userDetails = signInApplication.loadUserByUserId(Aes256Util.decrypt(parseToken(token).getSubject())
           , getMemberType(token));
     }
 

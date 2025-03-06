@@ -1,6 +1,6 @@
 package com.zerobase.SelfWash.member.domain.dto;
 
-import com.zerobase.SelfWash.member.domain.entity.Member;
+import com.zerobase.SelfWash.member.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class UserDto {
 
   private long id;
   private String email;
@@ -20,13 +20,13 @@ public class MemberDto {
   private String name;
   private String account;
 
-  public static MemberDto from(Member member) {
-    return MemberDto.builder()
-        .id(member.getId())
-        .email(member.getEmail())
-        .phone(member.getPhone())
-        .name(member.getName())
-        .account(member.getAccount())
+  public static UserDto from(User user) {
+    return UserDto.builder()
+        .id(user.getId())
+        .email(user.getEmail())
+        .phone(user.getPhone())
+        .name(user.getName())
+        .account(user.getAccount())
         .build();
   }
 

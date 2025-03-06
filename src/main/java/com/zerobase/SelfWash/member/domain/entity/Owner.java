@@ -1,6 +1,6 @@
 package com.zerobase.SelfWash.member.domain.entity;
 
-import com.zerobase.SelfWash.member.domain.form.MemberSignUpForm;
+import com.zerobase.SelfWash.member.domain.form.UserSignUpForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Owner extends BaseEntity implements Member{
+public class Owner extends BaseEntity implements User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class Owner extends BaseEntity implements Member{
   private String emailAuthKey;
   private boolean emailAuthYn;
 
-  public static Owner signUpFrom(MemberSignUpForm signUpForm) {
+  public static Owner signUpFrom(UserSignUpForm signUpForm) {
     return Owner.builder()
         .email(signUpForm.getEmail())
         .password(BCrypt.hashpw(signUpForm.getPassword(), BCrypt.gensalt()))
