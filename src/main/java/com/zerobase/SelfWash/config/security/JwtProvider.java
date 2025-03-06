@@ -34,10 +34,11 @@ public class JwtProvider {
 
   private static final long tokenValidTime = 1000L * 60 * 60 * 24;
 
-  public String createToken(String memberId, MemberType memberType) {
+  public String createToken(Long pkId, String memberId, MemberType memberType) {
 
     Claims claims = Jwts.claims()
-        .setSubject(Aes256Util.encrypt(memberId));
+        .setSubject(Aes256Util.encrypt(memberId))
+        .setId(Aes256Util.encrypt(pkId.toString()));
 
     claims.put(KEY_ROLES, memberType.name());
 
@@ -70,6 +71,11 @@ public class JwtProvider {
     }
 
     return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+  }
+
+  // TODO 나중에 이메일 정보를 추출할지 아니면 pk Id 값을 넣을지 결정
+  public String getMemberId (String token) {
+    return Aes256Util.decrypt(parseToken(token).getId());
   }
 
   private MemberType getMemberType(String token) {

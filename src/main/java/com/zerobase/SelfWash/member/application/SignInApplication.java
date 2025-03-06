@@ -1,5 +1,7 @@
 package com.zerobase.SelfWash.member.application;
 
+import com.zerobase.SelfWash.member.domain.dto.AdminDto;
+import com.zerobase.SelfWash.member.domain.dto.MemberDto;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
 import com.zerobase.SelfWash.member.service.signin.AdminSignInService;
@@ -16,12 +18,12 @@ public class SignInApplication {
   private final List<MemberSignInService> memberSignInServices;
   private final AdminSignInService adminSignInService;
 
-  public void signIn(MemberType memberType, SignInForm signInForm) {
-    getSignInService(memberType).signIn(signInForm);
+  public MemberDto memberSignIn(MemberType memberType, SignInForm signInForm) {
+    return getSignInService(memberType).signIn(signInForm);
   }
 
-  public void adminSignIn(SignInForm signInForm) {
-    adminSignInService.signIn(signInForm);
+  public AdminDto adminSignIn(SignInForm signInForm) {
+    return adminSignInService.signIn(signInForm);
   }
 
 

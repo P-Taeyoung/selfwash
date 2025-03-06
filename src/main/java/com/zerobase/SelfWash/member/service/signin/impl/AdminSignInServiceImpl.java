@@ -3,6 +3,7 @@ package com.zerobase.SelfWash.member.service.signin.impl;
 import static com.zerobase.SelfWash.member.domain.type.MemberType.ADMIN;
 
 import com.zerobase.SelfWash.config.security.JwtProvider;
+import com.zerobase.SelfWash.member.domain.dto.AdminDto;
 import com.zerobase.SelfWash.member.domain.entity.Admin;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.repository.AdminRepository;
@@ -26,7 +27,7 @@ public class AdminSignInServiceImpl implements AdminSignInService {
   private final AdminRepository adminRepository;
 
   @Override
-  public void signIn(SignInForm signInForm) {
+  public AdminDto signIn(SignInForm signInForm) {
     Admin admin = adminRepository.findByAdminId(signInForm.getMemberIdOrAdminId())
         .orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
 
@@ -37,6 +38,8 @@ public class AdminSignInServiceImpl implements AdminSignInService {
     if (!BCrypt.checkpw(signInForm.getPassword(), admin.getPassword())) {
       throw new RuntimeException("비밀번호가 일치하지 않습니다.");
     }
+
+    return AdminDto.from(admin);
   }
 
   @Override

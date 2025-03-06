@@ -2,6 +2,7 @@ package com.zerobase.SelfWash.member.service.signin.impl;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.CUSTOMER;
 
+import com.zerobase.SelfWash.member.domain.dto.MemberDto;
 import com.zerobase.SelfWash.member.domain.entity.Customer;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.repository.CustomerRepository;
@@ -29,8 +30,8 @@ public class CustomerSignInServiceImpl implements MemberSignInService {
   }
 
   @Override
-  public void signIn(SignInForm signInForm) {
-    verifySignIn(signInForm, customerRepository::findByEmail);
+  public MemberDto signIn(SignInForm signInForm) {
+    return verifySignIn(signInForm, customerRepository::findByEmail);
   }
 
 

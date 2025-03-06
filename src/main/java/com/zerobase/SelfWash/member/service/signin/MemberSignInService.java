@@ -1,5 +1,6 @@
 package com.zerobase.SelfWash.member.service.signin;
 
+import com.zerobase.SelfWash.member.domain.dto.MemberDto;
 import com.zerobase.SelfWash.member.domain.entity.Member;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
@@ -12,9 +13,9 @@ public interface MemberSignInService extends UserDetailsService {
 
   boolean support(MemberType type);
 
-  void signIn(SignInForm form);
+  MemberDto signIn(SignInForm form);
 
-  default void verifySignIn(SignInForm signInForm
+  default MemberDto verifySignIn(SignInForm signInForm
   , Function<String, Optional<? extends Member>> findByEmail) {
 
     Member member = findByEmail.apply(signInForm.getMemberIdOrAdminId())
@@ -27,5 +28,7 @@ public interface MemberSignInService extends UserDetailsService {
     if (!BCrypt.checkpw(signInForm.getPassword(), member.getPassword())) {
       throw new RuntimeException("비밀번호가 일치하지 않습니다.");
     }
+
+    return MemberDto.from(member);
   };
 }

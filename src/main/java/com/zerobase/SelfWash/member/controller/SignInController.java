@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 @Slf4j
 @RestController
 @RequestMapping("/signin")
@@ -26,26 +27,26 @@ public class SignInController {
   @PostMapping("/customer")
   public ResponseEntity<String> customerSignIn(@RequestBody SignInForm signInForm) {
 
-    signInApplication.signIn(CUSTOMER, signInForm);
-
-    return ResponseEntity.ok(jwtProvider.createToken(signInForm.getMemberIdOrAdminId(), CUSTOMER));
+    return ResponseEntity.ok(jwtProvider.createToken(
+        signInApplication.memberSignIn(CUSTOMER, signInForm).getId(),
+        signInForm.getMemberIdOrAdminId(), CUSTOMER));
   }
 
   @PostMapping("/owner")
   public ResponseEntity<String> ownerSignIn(@RequestBody SignInForm signInForm) {
 
-    signInApplication.signIn(OWNER, signInForm);
-
-    return ResponseEntity.ok(jwtProvider.createToken(signInForm.getMemberIdOrAdminId(), OWNER));
+    return ResponseEntity.ok(jwtProvider.createToken(
+        signInApplication.memberSignIn(OWNER, signInForm).getId(),
+        signInForm.getMemberIdOrAdminId(), OWNER));
   }
 
 
   @PostMapping("/admin")
   public ResponseEntity<String> adminSignIn(@RequestBody SignInForm signInForm) {
 
-    signInApplication.adminSignIn(signInForm);
-
-    return ResponseEntity.ok(jwtProvider.createToken(signInForm.getMemberIdOrAdminId(), ADMIN));
+    return ResponseEntity.ok(jwtProvider.createToken(
+        signInApplication.adminSignIn(signInForm).getId(),
+        signInForm.getMemberIdOrAdminId(), ADMIN));
   }
 
 
