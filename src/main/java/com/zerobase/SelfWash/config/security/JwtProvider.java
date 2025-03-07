@@ -77,7 +77,7 @@ public class JwtProvider {
   }
 
   // TODO 나중에 이메일 정보를 추출할지 아니면 pk Id 값을 넣을지 결정
-  public Long getMemberId (String token) {
+  public Long getPkId (String token) {
     return Long.valueOf(Objects.requireNonNull(Aes256Util.decrypt(parseToken(token.substring(MemberFilter.TOKEN_PREFIX.length()).trim()).getId())));
   }
 
