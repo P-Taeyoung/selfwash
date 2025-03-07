@@ -40,6 +40,8 @@ public class MemberFilter extends OncePerRequestFilter {
 
     String token = tokenFromRequest(request);
 
+    log.info("{} : {}", request, token);
+
     if (!jwtProvider.validateToken(token)) {
       log.info("유효하지 않은 토큰 값{}", token);
       throw new ServletException("Invalid token");
@@ -59,8 +61,6 @@ public class MemberFilter extends OncePerRequestFilter {
       throw new RuntimeException("유효한 토큰이 아닙니다.");
     }
 
-    return bearerToken.substring(TOKEN_PREFIX.length());
+    return bearerToken.substring(TOKEN_PREFIX.length()).trim();
   }
-
-
 }

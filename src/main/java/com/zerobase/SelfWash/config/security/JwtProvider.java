@@ -2,16 +2,19 @@ package com.zerobase.SelfWash.config.security;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.ADMIN;
 
+import com.zerobase.SelfWash.config.security.filter.MemberFilter;
 import com.zerobase.SelfWash.config.security.util.Aes256Util;
 import com.zerobase.SelfWash.member.application.SignInApplication;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -74,8 +77,8 @@ public class JwtProvider {
   }
 
   // TODO 나중에 이메일 정보를 추출할지 아니면 pk Id 값을 넣을지 결정
-  public String getMemberId (String token) {
-    return Aes256Util.decrypt(parseToken(token).getId());
+  public Long getMemberId (String token) {
+    return Long.valueOf(Objects.requireNonNull(Aes256Util.decrypt(parseToken(token.substring(MemberFilter.TOKEN_PREFIX.length()).trim()).getId())));
   }
 
   private MemberType getMemberType(String token) {
@@ -84,15 +87,21 @@ public class JwtProvider {
 
   public Claims parseToken(String token) {
     try {
+      log.info("Parsing token : {}", token);
       return Jwts.parserBuilder()
           .setSigningKey(secretKey)
           .build()
           .parseClaimsJws(token)
           .getBody();
     } catch (ExpiredJwtException e) {
-      log.error("{} : {}", e, e.getMessage());
+      log.error("Token expired: {}", e.getMessage());
       return e.getClaims();
+    } catch (DecodingException e) {
+      log.error("Decoding error: {}", e.getMessage());
+      throw new RuntimeException("Invalid token format", e);
+    } catch (Exception e) {
+      log.error("Unknown error during token parsing: {}", e.getMessage());
+      throw new RuntimeException("Error parsing token", e);
     }
   }
-
 }

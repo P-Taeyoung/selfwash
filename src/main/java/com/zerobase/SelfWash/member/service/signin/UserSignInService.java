@@ -29,6 +29,10 @@ public interface UserSignInService extends UserDetailsService {
       throw new RuntimeException("비밀번호가 일치하지 않습니다.");
     }
 
+    if (user.isDeleted()) {
+      throw new RuntimeException("삭제된 회원입니다.");
+    }
+
     return UserDto.from(user);
   };
 }
