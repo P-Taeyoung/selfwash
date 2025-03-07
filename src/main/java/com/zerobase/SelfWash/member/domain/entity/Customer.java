@@ -34,7 +34,7 @@ public class Customer extends BaseEntity  implements User {
   private int balance;
   private String account;
 
-  private boolean deleted;
+  private boolean withdraw;
 
   private String emailAuthKey;
   private boolean emailAuthYn;
@@ -49,7 +49,7 @@ public class Customer extends BaseEntity  implements User {
         .account(signUpForm.getAccount())
         .emailAuthKey(signUpForm.getEmailAuthKey())
         .emailAuthYn(false)
-        .deleted(false)
+        .withdraw(false)
         .build();
   }
 

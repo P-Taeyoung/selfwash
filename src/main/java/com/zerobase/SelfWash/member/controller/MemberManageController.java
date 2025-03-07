@@ -7,16 +7,12 @@ import com.zerobase.SelfWash.member.application.MemberManageApplication;
 import com.zerobase.SelfWash.member.domain.dto.AdminDto;
 import com.zerobase.SelfWash.member.domain.dto.UserDto;
 import com.zerobase.SelfWash.member.domain.form.AdminUpdateForm;
-import com.zerobase.SelfWash.member.domain.form.UserSignUpForm;
 import com.zerobase.SelfWash.member.domain.form.UserUpdateForm;
-import com.zerobase.SelfWash.member.domain.type.MemberType;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.pulsar.PulsarProperties.Admin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -42,7 +38,7 @@ public class MemberManageController {
       @RequestBody UserUpdateForm signUpForm) {
 
     return ResponseEntity.ok(memberManageApplication.updateUser(
-        jwtProvider.getMemberId(token),
+        jwtProvider.getPkId(token),
         signUpForm,
         CUSTOMER));
   }
@@ -51,12 +47,12 @@ public class MemberManageController {
       summary = "고객 회원 삭제",
       tags = {"회원 정보 관리"}
   )
-  @DeleteMapping("/customer/delete")
+  @DeleteMapping("/customer/withdraw")
   @PreAuthorize("hasAuthority('CUSTOMER')")
   public ResponseEntity<String> deleteCustomer(
       @RequestHeader(name = "Authorization") String token) {
 
-    memberManageApplication.deleteUser(jwtProvider.getMemberId(token), CUSTOMER);
+    memberManageApplication.deleteUser(jwtProvider.getPkId(token), CUSTOMER);
 
     return ResponseEntity.ok("회원이 삭제되었습니다.");
   }
@@ -73,7 +69,7 @@ public class MemberManageController {
       @RequestBody UserUpdateForm signUpForm) {
 
     return ResponseEntity.ok(memberManageApplication.updateUser(
-        jwtProvider.getMemberId(token),
+        jwtProvider.getPkId(token),
         signUpForm,
         OWNER));
   }
@@ -82,12 +78,12 @@ public class MemberManageController {
       summary = "점주 회원 삭제",
       tags = {"회원 정보 관리"}
   )
-  @DeleteMapping("/owner/delete")
+  @DeleteMapping("/owner/withdraw")
   @PreAuthorize("hasAuthority('OWNER')")
   public ResponseEntity<String> deleteOwner(
       @RequestHeader(name = "Authorization") String token) {
 
-    memberManageApplication.deleteUser(jwtProvider.getMemberId(token), OWNER);
+    memberManageApplication.deleteUser(jwtProvider.getPkId(token), OWNER);
 
     return ResponseEntity.ok("회원이 삭제되었습니다.");
   }
@@ -103,7 +99,7 @@ public class MemberManageController {
       @RequestBody AdminUpdateForm signUpForm) {
 
     return ResponseEntity.ok(memberManageApplication.updateAdmin(
-        jwtProvider.getMemberId(token),
+        jwtProvider.getPkId(token),
         signUpForm));
   }
 
@@ -111,12 +107,12 @@ public class MemberManageController {
       summary = "관리자 삭제",
       tags = {"회원 정보 관리"}
   )
-  @DeleteMapping("/admin/delete")
+  @DeleteMapping("/admin/withdraw")
   @PreAuthorize("hasAuthority('ADMIN')")
   public ResponseEntity<String> deleteAdmin(
       @RequestHeader(name = "Authorization") String token) {
 
-    memberManageApplication.deleteAdmin(jwtProvider.getMemberId(token));
+    memberManageApplication.deleteAdmin(jwtProvider.getPkId(token));
 
     return ResponseEntity.ok("회원이 삭제되었습니다.");
   }

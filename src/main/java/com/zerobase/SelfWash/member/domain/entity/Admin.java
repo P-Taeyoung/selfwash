@@ -29,7 +29,7 @@ public class Admin extends BaseEntity {
   private String phone;
   private String name;
 
-  private boolean deleted;
+  private boolean withdraw;
 
   private boolean adminAuthYn;
 
@@ -40,7 +40,7 @@ public class Admin extends BaseEntity {
         .phone(signUpForm.getPhone())
         .name(signUpForm.getName())
         .adminAuthYn(false)
-        .deleted(false)
+        .withdraw(false)
         .build();
   }
 }

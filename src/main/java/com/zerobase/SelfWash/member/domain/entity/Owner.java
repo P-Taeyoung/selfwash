@@ -33,7 +33,7 @@ public class Owner extends BaseEntity implements User {
   private String name;
   private String account;
 
-  private boolean deleted;
+  private boolean withdraw;
 
   private String emailAuthKey;
   private boolean emailAuthYn;
@@ -47,7 +47,7 @@ public class Owner extends BaseEntity implements User {
         .account(signUpForm.getAccount())
         .emailAuthKey(signUpForm.getEmailAuthKey())
         .emailAuthYn(false)
-        .deleted(false)
+        .withdraw(false)
         .build();
   }
 }
