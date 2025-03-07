@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @RequiredArgsConstructor
 public class MemberFilter extends OncePerRequestFilter {
+
   private final JwtProvider jwtProvider;
 
   public static final String TOKEN_HEADER = "Authorization";
@@ -28,7 +29,11 @@ public class MemberFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
     String requestURI = request.getRequestURI();
 
-    if (requestURI.startsWith("/signup/") || requestURI.startsWith("/signin/")) {
+    if (requestURI.startsWith("/signup/")
+        || requestURI.startsWith("/signin/")
+        || requestURI.startsWith("/swagger-ui/")
+        || requestURI.startsWith("/v3/api-docs"))
+    {
       filterChain.doFilter(request, response);
       return;
     }

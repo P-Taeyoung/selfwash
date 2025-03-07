@@ -1,9 +1,11 @@
 package com.zerobase.SelfWash.member.application;
 
+import com.zerobase.SelfWash.member.domain.dto.AdminDto;
+import com.zerobase.SelfWash.member.domain.dto.UserDto;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.type.MemberType;
 import com.zerobase.SelfWash.member.service.signin.AdminSignInService;
-import com.zerobase.SelfWash.member.service.signin.MemberSignInService;
+import com.zerobase.SelfWash.member.service.signin.UserSignInService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,28 +15,28 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SignInApplication {
 
-  private final List<MemberSignInService> memberSignInServices;
+  private final List<UserSignInService> userSignInServices;
   private final AdminSignInService adminSignInService;
 
-  public void signIn(MemberType memberType, SignInForm signInForm) {
-    getSignInService(memberType).signIn(signInForm);
+  public UserDto userSignIn(MemberType memberType, SignInForm signInForm) {
+    return getSignInService(memberType).signIn(signInForm);
   }
 
-  public void adminSignIn(SignInForm signInForm) {
-    adminSignInService.signIn(signInForm);
+  public AdminDto adminSignIn(SignInForm signInForm) {
+    return adminSignInService.signIn(signInForm);
   }
 
 
-  private MemberSignInService getSignInService(MemberType type) {
-    return memberSignInServices.stream().filter(memberSignInService -> memberSignInService.support(type))
+  private UserSignInService getSignInService(MemberType type) {
+    return userSignInServices.stream().filter(userSignInService -> userSignInService.support(type))
         .findFirst()
         .orElseThrow(() -> new RuntimeException("로그인 유형이 유효한 값이 아닙니다."));
   }
 
 
-  public UserDetails loadMemberByMemberId(String memberId, MemberType type) {
-    MemberSignInService memberSignInService = getSignInService(type);
-    return memberSignInService.loadUserByUsername(memberId);
+  public UserDetails loadUserByUserId(String memberId, MemberType type) {
+    UserSignInService userSignInService = getSignInService(type);
+    return userSignInService.loadUserByUsername(memberId);
   }
 
   public UserDetails loadAdminByAdminId(String adminId) {
