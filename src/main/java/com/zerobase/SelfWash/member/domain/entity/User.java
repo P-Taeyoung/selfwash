@@ -10,5 +10,10 @@ public interface User {
   boolean isEmailAuthYn();
   String getEmailAuthKey();
   String getPassword();
+  void setDeleted(boolean deleted);
+  boolean isDeleted();
   void setEmailAuthYn(boolean emailAuthYn);
+  void setPhone(String phone);
+  void setName(String name);
+  void setAccount(String account);
 }

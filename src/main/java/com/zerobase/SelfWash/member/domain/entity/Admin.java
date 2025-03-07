@@ -9,11 +9,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Admin extends BaseEntity {
@@ -27,6 +29,8 @@ public class Admin extends BaseEntity {
   private String phone;
   private String name;
 
+  private boolean deleted;
+
   private boolean adminAuthYn;
 
   public static Admin signUpFrom(AdminSignUpForm signUpForm) {
@@ -36,6 +40,7 @@ public class Admin extends BaseEntity {
         .phone(signUpForm.getPhone())
         .name(signUpForm.getName())
         .adminAuthYn(false)
+        .deleted(false)
         .build();
   }
 }

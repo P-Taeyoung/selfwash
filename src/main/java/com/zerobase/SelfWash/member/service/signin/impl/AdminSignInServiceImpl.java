@@ -2,12 +2,10 @@ package com.zerobase.SelfWash.member.service.signin.impl;
 
 import static com.zerobase.SelfWash.member.domain.type.MemberType.ADMIN;
 
-import com.zerobase.SelfWash.config.security.JwtProvider;
 import com.zerobase.SelfWash.member.domain.dto.AdminDto;
 import com.zerobase.SelfWash.member.domain.entity.Admin;
 import com.zerobase.SelfWash.member.domain.form.SignInForm;
 import com.zerobase.SelfWash.member.domain.repository.AdminRepository;
-import com.zerobase.SelfWash.member.domain.type.MemberType;
 import com.zerobase.SelfWash.member.service.signin.AdminSignInService;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +35,10 @@ public class AdminSignInServiceImpl implements AdminSignInService {
 
     if (!BCrypt.checkpw(signInForm.getPassword(), admin.getPassword())) {
       throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+    }
+
+    if (admin.isDeleted()) {
+      throw new RuntimeException("삭제된 회원입니다.");
     }
 
     return AdminDto.from(admin);
