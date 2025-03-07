@@ -38,7 +38,7 @@ public interface UserManageService {
     User user = findById.apply(id)
         .orElseThrow(() -> new RuntimeException("존재하는 회원 정보가 없습니다."));
 
-    user.setDeleted(true);
+    user.setWithdraw(true);
   }
 
 }

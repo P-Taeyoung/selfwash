@@ -28,7 +28,7 @@ public class AdminManageServiceImpl implements AdminManageService {
   @Transactional
   public void deleteAdmin(Long id) {
     Admin admin = adminRepository.findById(id).orElseThrow(RuntimeException::new);
-    admin.setDeleted(true);
+    admin.setWithdraw(true);
   }
 
 }

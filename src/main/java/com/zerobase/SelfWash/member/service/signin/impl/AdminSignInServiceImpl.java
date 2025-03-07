@@ -37,7 +37,7 @@ public class AdminSignInServiceImpl implements AdminSignInService {
       throw new RuntimeException("비밀번호가 일치하지 않습니다.");
     }
 
-    if (admin.isDeleted()) {
+    if (admin.isWithdraw()) {
       throw new RuntimeException("삭제된 회원입니다.");
     }
 
