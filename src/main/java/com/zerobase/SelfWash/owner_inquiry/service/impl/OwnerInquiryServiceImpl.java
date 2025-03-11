@@ -30,7 +30,7 @@ public class OwnerInquiryServiceImpl implements OwnerInquiryService {
     OwnerInquiry inquiry = ownerInquiryRepository.findById(inquiryId)
         .orElseThrow(() -> new RuntimeException("해당하는 문의 내용이 없습니다."));
 
-    if (inquiry.isResolved()) {
+    if (inquiry.getResolvedTime() != null) {
       throw new RuntimeException("이미 처리 완료된 문의는 수정할 수 없습니다.");
     }
 
