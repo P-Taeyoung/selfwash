@@ -2,6 +2,7 @@ package com.zerobase.SelfWash.administer_store.controller;
 
 import com.zerobase.SelfWash.administer_store.domain.dto.StoreDto;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
+import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
 import com.zerobase.SelfWash.administer_store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class AdministerStoreController {
       tags = {"매장 관리"}
   )
   @PutMapping
-  public ResponseEntity<String> modify(@RequestParam long storeId, @RequestBody StoreForm form) {
+  public ResponseEntity<String> modify(@RequestParam long storeId, @RequestBody StoreModifyForm form) {
     storeService.modify(storeId, form);
     return ResponseEntity.ok("매장 정보가 수정되었습니다.");
   }

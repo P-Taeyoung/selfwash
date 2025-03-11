@@ -3,6 +3,7 @@ package com.zerobase.SelfWash.administer_store.service.impl;
 import com.zerobase.SelfWash.administer_store.domain.dto.StoreDto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Store;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
+import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
 import com.zerobase.SelfWash.administer_store.domain.repository.MachineRepository;
 import com.zerobase.SelfWash.administer_store.domain.repository.StoreRepository;
 import com.zerobase.SelfWash.administer_store.service.StoreService;
@@ -31,7 +32,7 @@ public class StoreServiceImpl implements StoreService {
 
   @Override
   @Transactional
-  public void modify(Long storeId, StoreForm form) {
+  public void modify(Long storeId, StoreModifyForm form) {
     Store store = storeRepository.findById(storeId)
         .orElseThrow(() -> new RuntimeException("해당하는 매장 정보가 없습니다."));
 

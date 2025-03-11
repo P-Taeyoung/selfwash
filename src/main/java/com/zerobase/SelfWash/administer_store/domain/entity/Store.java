@@ -1,5 +1,6 @@
 package com.zerobase.SelfWash.administer_store.domain.entity;
 
+import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
 import com.zerobase.SelfWash.member.domain.entity.BaseEntity;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
@@ -73,11 +74,11 @@ public class Store extends BaseEntity {
         }).collect(Collectors.toList());
   }
 
-  public void modify(StoreForm form) {
-    this.setOwnerId(form.getOwnerId());
+  public void modify(StoreModifyForm form) {
     this.setAddress(form.getAddress());
     this.setLatitude(form.getLatitude());
     this.setLongitude(form.getLongitude());
+    this.setNotes(form.getNotes());
   }
 
   public void addMachine (Machine machine) {
