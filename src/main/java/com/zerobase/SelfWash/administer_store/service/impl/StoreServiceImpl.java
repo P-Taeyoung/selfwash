@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class StoreServiceImpl implements StoreService {
 
   private final StoreRepository storeRepository;
-  private final MachineRepository machineRepository;
 
   @Override
   @Transactional
@@ -32,11 +31,11 @@ public class StoreServiceImpl implements StoreService {
 
   @Override
   @Transactional
-  public StoreDto modify(Long storeId, StoreForm form) {
+  public void modify(Long storeId, StoreForm form) {
     Store store = storeRepository.findById(storeId)
         .orElseThrow(() -> new RuntimeException("해당하는 매장 정보가 없습니다."));
 
-    return modifyStore(store, form);
+    store.modify(form);
   }
 
   @Override
@@ -68,18 +67,6 @@ public class StoreServiceImpl implements StoreService {
     }
 
     store.setApproved(true);
-  }
-
-  private StoreDto modifyStore(
-      Store store,
-      StoreForm form) {
-
-    store.setOwnerId(form.getOwnerId());
-    store.setAddress(form.getAddress());
-    store.setLatitude(form.getLatitude());
-    store.setLongitude(form.getLongitude());
-
-    return StoreDto.from(store);
   }
 
 }

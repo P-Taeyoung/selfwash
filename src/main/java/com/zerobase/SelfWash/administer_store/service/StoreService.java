@@ -12,7 +12,7 @@ public interface StoreService {
   StoreDto search(Long storeId);
 
   //매장 정보 수정
-  StoreDto modify(Long storeId, StoreForm form);
+  void modify(Long storeId, StoreForm form);
 
   //매장 정보 삭제
   void remove(Long reqId);

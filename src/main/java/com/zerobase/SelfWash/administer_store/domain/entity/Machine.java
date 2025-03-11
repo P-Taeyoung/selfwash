@@ -54,4 +54,10 @@ public class Machine extends BaseEntity {
         .build();
   }
 
+  public void modify(MachineForm form) {
+    this.setMachineType(form.getMachineType());
+    this.setMachineCompany(form.getMachineCompany());
+    this.setNotes(form.getNotes());
+  }
+
 }

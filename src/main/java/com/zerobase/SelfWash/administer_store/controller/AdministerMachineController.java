@@ -55,8 +55,9 @@ public class AdministerMachineController {
       tags = {"기계 관리"}
   )
   @PutMapping
-  public ResponseEntity<MachineDto> modify(@RequestParam Long machineId, @RequestBody MachineForm form) {
-    return ResponseEntity.ok(machineService.modify(machineId, form));
+  public ResponseEntity<String> modify(@RequestParam Long machineId, @RequestBody MachineForm form) {
+    machineService.modify(machineId, form);
+    return ResponseEntity.ok("기계정보가 수정되었습니다.");
   }
 
 

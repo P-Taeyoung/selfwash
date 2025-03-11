@@ -21,7 +21,7 @@ public interface MachineService {
   MachineDto search(Long machineId);
 
   //기계 정보 수정
-  MachineDto modify(Long machineId, MachineForm form);
+  void modify(Long machineId, MachineForm form);
 
 
 

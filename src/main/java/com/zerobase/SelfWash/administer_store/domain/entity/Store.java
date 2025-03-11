@@ -73,6 +73,13 @@ public class Store extends BaseEntity {
         }).collect(Collectors.toList());
   }
 
+  public void modify(StoreForm form) {
+    this.setOwnerId(form.getOwnerId());
+    this.setAddress(form.getAddress());
+    this.setLatitude(form.getLatitude());
+    this.setLongitude(form.getLongitude());
+  }
+
   public void addMachine (Machine machine) {
     machines.add(machine);
     machine.setStore(this);

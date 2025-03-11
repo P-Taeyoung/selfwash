@@ -23,13 +23,12 @@ public class MachineServiceImpl implements MachineService {
   public MachineDto create(Long storeId, MachineForm form) {
     Store store = storeRepository.findById(storeId)
         .orElseThrow(() -> new RuntimeException("해당하는 매장 정보가 없습니다."));
-    if (store.isWithdraw()) {
+
+    //폐점되었거나 이미 가게 등록 승인이 된 경우에는 기계 추가 불가능
+    if (store.isWithdraw() || store.isApproved()) {
       throw new RuntimeException("기계 추가가 불가능한 매장입니다.");
     }
-    //이미 가게 등록 승인이 된 경우에는 기계 추가 불가능
-    if (store.isApproved()) {
-      throw new RuntimeException("기계 추가가 불가능한 매장입니다.");
-    }
+
 
     //매장데이터와 동기화
     Machine machine = Machine.from(form);
@@ -43,12 +42,9 @@ public class MachineServiceImpl implements MachineService {
   public void remove(Long storeId, Long machineId) {
     Store store = storeRepository.findById(storeId)
         .orElseThrow(() -> new RuntimeException("해당하는 매장 정보가 없습니다."));
-    if (store.isWithdraw()) {
-      throw new RuntimeException("기계 삭제가 불가능한 매장입니다.");
-    }
 
-    if (store.isApproved()) {
-      throw new RuntimeException("기계 삭제가 불가능한 매장입니다.");
+    if (store.isWithdraw() || store.isApproved()) {
+      throw new RuntimeException("기계 추가가 불가능한 매장입니다.");
     }
 
     Machine machine = machineRepository.findById(machineId)
@@ -69,16 +65,12 @@ public class MachineServiceImpl implements MachineService {
 
   @Override
   @Transactional
-  public MachineDto modify(Long machineId, MachineForm form) {
+  public void modify(Long machineId, MachineForm form) {
 
     Machine machine = machineRepository.findById(machineId)
         .orElseThrow(() -> new RuntimeException("해당하는 기계 정보가 없습니다."));
 
-    machine.setMachineType(form.getMachineType());
-    machine.setMachineCompany(form.getMachineCompany());
-    machine.setNotes(form.getNotes());
-
-    return MachineDto.from(machine);
+    machine.modify(form);
   }
 
 

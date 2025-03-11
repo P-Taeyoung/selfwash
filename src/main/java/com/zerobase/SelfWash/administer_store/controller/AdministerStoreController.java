@@ -47,8 +47,9 @@ public class AdministerStoreController {
       tags = {"매장 관리"}
   )
   @PutMapping
-  public ResponseEntity<StoreDto> modify(@RequestParam long storeId, @RequestBody StoreForm form) {
-    return ResponseEntity.ok(storeService.modify(storeId, form));
+  public ResponseEntity<String> modify(@RequestParam long storeId, @RequestBody StoreForm form) {
+    storeService.modify(storeId, form);
+    return ResponseEntity.ok("매장 정보가 수정되었습니다.");
   }
 
 
