@@ -3,6 +3,7 @@ package com.zerobase.SelfWash.administer_store.domain.dto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Machine;
 import com.zerobase.SelfWash.administer_store.domain.type.MachineCompany;
 import com.zerobase.SelfWash.administer_store.domain.type.MachineType;
+import com.zerobase.SelfWash.administer_store.domain.type.UsageStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,15 +20,15 @@ public class MachineDto {
   private long machineId;
   private MachineType machineType;
   private MachineCompany machineCompany;
-  private String usageStatus;
+  private UsageStatus usageStatus;
   private String notes;
 
 
   public static MachineDto from(Machine registerMachine) {
     return MachineDto.builder()
         .machineId(registerMachine.getId())
-        .machineType(MachineType.valueOf(registerMachine.getMachineType()))
-        .machineCompany(MachineCompany.valueOf(registerMachine.getMachineCompany()))
+        .machineType(registerMachine.getMachineType())
+        .machineCompany(registerMachine.getMachineCompany())
         .usageStatus(registerMachine.getUsageStatus())
         .notes(registerMachine.getNotes())
         .build();

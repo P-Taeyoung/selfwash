@@ -1,5 +1,7 @@
 package com.zerobase.SelfWash.administer_store.domain.entity;
 
+import com.zerobase.SelfWash.administer_store.domain.type.MachineCompany;
+import com.zerobase.SelfWash.administer_store.domain.type.MachineType;
 import com.zerobase.SelfWash.member.domain.entity.BaseEntity;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
 import com.zerobase.SelfWash.administer_store.domain.type.UsageStatus;
@@ -31,11 +33,11 @@ public class Machine extends BaseEntity {
   @JoinColumn(name = "store_id", nullable = false)
   private Store store;
 
-  private String machineCompany;
-  private String machineType;
+  private MachineCompany machineCompany;
+  private MachineType machineType;
 
   //사용현황
-  private String usageStatus;
+  private UsageStatus usageStatus;
   //비고
   private String notes;
   //삭제예정데이터
@@ -44,10 +46,10 @@ public class Machine extends BaseEntity {
 
   public static Machine from(MachineForm form) {
     return Machine.builder()
-        .machineType(form.getMachineType().name())
-        .machineCompany(form.getMachineCompany().name())
+        .machineType(form.getMachineType())
+        .machineCompany(form.getMachineCompany())
         .notes(form.getNotes())
-        .usageStatus(UsageStatus.USABLE.name())
+        .usageStatus(UsageStatus.USABLE)
         .withdraw(false)
         .build();
   }

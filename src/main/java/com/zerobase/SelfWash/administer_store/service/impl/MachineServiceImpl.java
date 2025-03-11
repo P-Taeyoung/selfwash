@@ -74,8 +74,8 @@ public class MachineServiceImpl implements MachineService {
     Machine machine = machineRepository.findById(machineId)
         .orElseThrow(() -> new RuntimeException("해당하는 기계 정보가 없습니다."));
 
-    machine.setMachineType(form.getMachineType().name());
-    machine.setMachineCompany(form.getMachineCompany().name());
+    machine.setMachineType(form.getMachineType());
+    machine.setMachineCompany(form.getMachineCompany());
     machine.setNotes(form.getNotes());
 
     return MachineDto.from(machine);
