@@ -6,6 +6,8 @@ import com.zerobase.SelfWash.member.domain.entity.BaseEntity;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
 import com.zerobase.SelfWash.administer_store.domain.type.UsageStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,10 +35,13 @@ public class Machine extends BaseEntity {
   @JoinColumn(name = "store_id", nullable = false)
   private Store store;
 
+  @Enumerated(EnumType.STRING)
   private MachineCompany machineCompany;
-  private MachineType machineType;
 
+  @Enumerated(EnumType.STRING)
+  private MachineType machineType;
   //사용현황
+  @Enumerated(EnumType.STRING)
   private UsageStatus usageStatus;
   //비고
   private String notes;
