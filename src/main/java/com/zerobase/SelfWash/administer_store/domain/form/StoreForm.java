@@ -16,8 +16,8 @@ public class StoreForm {
 
   private long ownerId;
   private String address;
-  private float latitude;
-  private float longitude;
+  private double latitude;
+  private double longitude;
   private String notes;
 
   private List<MachineForm> machineForms;

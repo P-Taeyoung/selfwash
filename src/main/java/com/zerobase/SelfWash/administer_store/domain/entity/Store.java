@@ -34,8 +34,8 @@ public class Store extends BaseEntity {
   //매장기본 정보
   private long ownerId;
   private String address;
-  private float latitude;
-  private float longitude;
+  private double latitude;
+  private double longitude;
 
   //운영현황
   private boolean opened;
