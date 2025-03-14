@@ -1,4 +1,4 @@
-package com.zerobase.SelfWash.administer_store.controller;
+package com.zerobase.SelfWash.administer_store.controller.admin;
 
 import com.zerobase.SelfWash.administer_store.domain.dto.MachineDto;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
