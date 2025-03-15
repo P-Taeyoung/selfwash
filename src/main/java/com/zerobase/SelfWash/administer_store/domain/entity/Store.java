@@ -1,10 +1,11 @@
 package com.zerobase.SelfWash.administer_store.domain.entity;
 
-import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
-import com.zerobase.SelfWash.member.domain.entity.BaseEntity;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
+import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
+import com.zerobase.SelfWash.member.domain.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+
 
 @Entity
 @Builder
@@ -34,8 +39,10 @@ public class Store extends BaseEntity {
   //매장기본 정보
   private long ownerId;
   private String address;
-  private double latitude;
-  private double longitude;
+
+  //위도,경도 정보
+  @Column(columnDefinition = "POINT")
+  private Point location;
 
   //운영현황
   private boolean opened;
@@ -53,8 +60,7 @@ public class Store extends BaseEntity {
     Store store = Store.builder()
         .ownerId(form.getOwnerId())
         .address(form.getAddress())
-        .latitude(form.getLatitude())
-        .longitude(form.getLongitude())
+        .location(createPoint(form.getLongitude(), form.getLatitude()))
         .notes(form.getNotes())
         .opened(false)
         .approved(false)
@@ -76,11 +82,11 @@ public class Store extends BaseEntity {
 
   public void modify(StoreModifyForm form) {
     this.setAddress(form.getAddress());
-    this.setLatitude(form.getLatitude());
-    this.setLongitude(form.getLongitude());
+    this.location = createPoint(form.getLongitude(), form.getLatitude());
     this.setNotes(form.getNotes());
   }
 
+  // 연관관계 설정에 따라서 부모 엔티티 변경에 따른 자식 엔티티 동기화를 위한 메서드
   public void addMachine (Machine machine) {
     machines.add(machine);
     machine.setStore(this);
@@ -89,5 +95,11 @@ public class Store extends BaseEntity {
   public void removeMachine (Machine machine) {
     machines.remove(machine);
     machine.setStore(null);
+  }
+
+
+  private static Point createPoint(double longitude, double latitude) {
+    GeometryFactory geometryFactory = new GeometryFactory();
+    return geometryFactory.createPoint(new Coordinate(longitude, latitude));
   }
 }

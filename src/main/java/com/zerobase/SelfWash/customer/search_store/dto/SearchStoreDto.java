@@ -18,6 +18,6 @@ public class SearchStoreDto {
   private double latitude;
   private double longitude;
   //설정 위치와 가게 사이 거리 (m 단위 기준)
-  private Integer distance;
+  private double distance;
 
 }

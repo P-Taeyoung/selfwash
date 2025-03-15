@@ -1,4 +1,4 @@
-package com.zerobase.SelfWash.administer_store.controller;
+package com.zerobase.SelfWash.administer_store.controller.admin;
 
 import com.zerobase.SelfWash.administer_store.domain.dto.StoreDto;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
@@ -73,5 +73,7 @@ public class AdministerStoreController {
     storeService.approve(storeId);
     return ResponseEntity.ok("매장 등록이 승인되었습니다.");
   }
+
+
 
 }
