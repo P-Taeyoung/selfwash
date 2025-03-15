@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: SelfWash
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/self_wash
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${DATABASE_PASSWORD}
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: zerobase
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true

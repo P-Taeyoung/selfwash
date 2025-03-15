@@ -19,8 +19,8 @@ public class StoreDto {
   private long storeId;
   private long ownerId;
   private String address;
-  private float latitude;
-  private float longitude;
+  private double latitude;
+  private double longitude;
   private String notes;
   private boolean opened;
   private boolean approved;

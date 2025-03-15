@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zerobase.SelfWash.customer.search_store.mapper.SearchStoreMapper">
+
+  <!-- 가까운 매장 조회 쿼리 -->
+  <select id="searchStore" resultType="com.zerobase.SelfWash.customer.search_store.dto.SearchStoreDto">
+    select
+    id as store_id,
+    address as store_address,
+    latitude,
+    longitude,
+    (6371 * 1000 * ACOS(COS(RADIANS(#{latitude})) * COS(RADIANS(latitude))
+    * COS(RADIANS(longitude) - RADIANS(#{longitude}))
+    + SIN(RADIANS(#{latitude})) * SIN(RADIANS(latitude)))) as distance
+    from
+    store
+    where
+    opened = true
+    having
+    distance &lt;= 500
+    order by
+    distance asc
+    limit 5
+  </select>
+
+</mapper>
