@@ -20,10 +20,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.data.geo.Point;
 import org.springframework.data.redis.core.GeoOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -63,16 +65,14 @@ public class ManageStoreServiceImplTest {
     openedStore.setId(1L);
     openedStore.setOpened(true);
     openedStore.setApproved(true);
-    openedStore.setLatitude(37.5);
-    openedStore.setLongitude(127.0);
+    openedStore.setLocation(new GeometryFactory().createPoint(new Coordinate(127.0, 37.5)));
     openedStore.setAddress("서울시 강남구");
 
     closedStore = new Store();
     closedStore.setId(2L);
     closedStore.setOpened(false);
     closedStore.setApproved(true);
-    closedStore.setLatitude(37.6);
-    closedStore.setLongitude(127.1);
+    closedStore.setLocation(new GeometryFactory().createPoint(new Coordinate(127.1, 37.6)));
     closedStore.setAddress("서울시 서초구");
 
     unapprovedStore = new Store();
@@ -108,9 +108,12 @@ public class ManageStoreServiceImplTest {
 
     // then
     assertTrue(closedStore.isOpened());
-    verify(geoOperations).add(eq("stores:locations"), any(RedisGeoCommands.GeoLocation.class));
+    verify(geoOperations).add(eq("stores:locations"),any(Point.class), anyString());
     verify(hashOperations).putAll(eq("stores:details:" + closedStore.getId()), any(Map.class));
   }
+
+  @Test
+  @DisplayName("주변 매장 조회")
 
   @Test
   @DisplayName("존재하지 않는 매장 ID로 요청 시 예외 발생")
@@ -144,7 +147,8 @@ public class ManageStoreServiceImplTest {
   void changeStoreOperationWithRedisFailure() {
     // given
     when(storeRepository.findById(closedStore.getId())).thenReturn(Optional.of(closedStore));
-    doThrow(new RuntimeException("Redis 연결 실패")).when(geoOperations).add(anyString(), any(RedisGeoCommands.GeoLocation.class));
+    doThrow(new RuntimeException("Redis 연결 실패")).when(geoOperations).add(anyString(), any(
+        Point.class), anyString());
 
     // when
     manageStoreService.storeOperationChange(closedStore.getId());
@@ -162,8 +166,7 @@ public class ManageStoreServiceImplTest {
     invalidStore.setId(4L);
     invalidStore.setOpened(false);
     invalidStore.setApproved(true);
-    invalidStore.setLatitude(200.0); // 유효하지 않은 위도
-    invalidStore.setLongitude(127.0);
+    openedStore.setLocation(new GeometryFactory().createPoint(new Coordinate(127.1, 200.0))); //유효하지 않은 위도
     invalidStore.setAddress("서울시 강남구");
 
     when(storeRepository.findById(invalidStore.getId())).thenReturn(Optional.of(invalidStore));

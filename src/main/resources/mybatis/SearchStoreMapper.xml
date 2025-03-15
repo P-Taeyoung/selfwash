@@ -5,23 +5,29 @@
 
   <!-- 가까운 매장 조회 쿼리 -->
   <select id="searchStore" resultType="com.zerobase.SelfWash.customer.search_store.dto.SearchStoreDto">
-    select
-    id as store_id,
-    address as store_address,
-    latitude,
-    longitude,
-    (6371 * 1000 * ACOS(COS(RADIANS(#{latitude})) * COS(RADIANS(latitude))
-    * COS(RADIANS(longitude) - RADIANS(#{longitude}))
-    + SIN(RADIANS(#{latitude})) * SIN(RADIANS(latitude)))) as distance
-    from
-    store
-    where
-    opened = true
-    having
-    distance &lt;= 500
-    order by
-    distance asc
-    limit 5
+    SELECT
+      id AS store_id,
+      address AS store_address,
+      ST_X(location) AS longitude,
+      ST_Y(location) AS latitude,
+      ST_Distance_Sphere(
+        location,
+        POINT(#{longitude}, #{latitude})
+      ) AS distance
+    FROM
+      store
+    WHERE
+      opened = true
+      AND MBRContains(
+      ST_Buffer(
+        POINT(#{longitude}, #{latitude}),
+        500/111195
+      ),
+      location
+          )
+    ORDER BY
+      distance ASC
+      LIMIT 5
   </select>
 
 </mapper>

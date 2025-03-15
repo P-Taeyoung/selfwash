@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
+
 
 @Getter
 @Setter
@@ -15,15 +17,14 @@ import lombok.Setter;
 public class StoreRedisDto {
   private long storeId;
   private String address;
-  private double longitude;
-  private double latitude;
+  private Point location;
+
 
   public static StoreRedisDto toDto(Store store) {
     return StoreRedisDto.builder()
         .storeId(store.getId())
         .address(store.getAddress())
-        .longitude(store.getLongitude())
-        .latitude(store.getLatitude())
+        .location(store.getLocation())
         .build();
   }
 }
