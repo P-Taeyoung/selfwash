@@ -126,12 +126,8 @@ public class ManageStoreServiceImpl implements ManageStoreService {
         String.valueOf(store.getStoreId()));
 
     // Redis에 매장 상세 정보 추가
-    Map<String, String> storeDetails = new HashMap<>();
-    storeDetails.put("storeId", String.valueOf(store.getStoreId()));
-    storeDetails.put("address", store.getAddress());
-    storeDetails.put("longitude", String.valueOf(store.getLocation().getX()));
-    storeDetails.put("latitude", String.valueOf(store.getLocation().getY()));
-    redisTemplate.opsForHash().putAll(STORE_KEY + store.getStoreId(), storeDetails);
+
+    redisTemplate.opsForHash().putAll(STORE_KEY + store.getStoreId(), store.toHashMap());
 
   }
 

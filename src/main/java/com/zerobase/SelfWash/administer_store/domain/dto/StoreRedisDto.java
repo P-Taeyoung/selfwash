@@ -1,6 +1,8 @@
 package com.zerobase.SelfWash.administer_store.domain.dto;
 
 import com.zerobase.SelfWash.administer_store.domain.entity.Store;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,5 +28,14 @@ public class StoreRedisDto {
         .address(store.getAddress())
         .location(store.getLocation())
         .build();
+  }
+
+  public Map<String, String> toHashMap() {
+    Map<String, String> map = new HashMap<>();
+    map.put("storeId", String.valueOf(this.getStoreId()));
+    map.put("address", this.getAddress());
+    map.put("longitude", String.valueOf(this.getLocation().getX()));
+    map.put("latitude", String.valueOf(this.getLocation().getY()));
+    return map;
   }
 }
