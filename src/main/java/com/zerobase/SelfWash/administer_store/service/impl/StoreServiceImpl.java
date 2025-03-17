@@ -4,15 +4,16 @@ import com.zerobase.SelfWash.administer_store.domain.dto.StoreDto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Store;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
-import com.zerobase.SelfWash.administer_store.domain.repository.MachineRepository;
 import com.zerobase.SelfWash.administer_store.domain.repository.StoreRepository;
 import com.zerobase.SelfWash.administer_store.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StoreServiceImpl implements StoreService {
 
   private final StoreRepository storeRepository;
