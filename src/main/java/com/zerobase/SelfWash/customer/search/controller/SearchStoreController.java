@@ -1,7 +1,8 @@
-package com.zerobase.SelfWash.customer.search_store.controller;
+package com.zerobase.SelfWash.customer.search.controller;
 
-import com.zerobase.SelfWash.customer.search_store.dto.SearchStoreDto;
-import com.zerobase.SelfWash.customer.search_store.service.SearchStoreService;
+import com.zerobase.SelfWash.customer.search.dto.SearchMachineDto;
+import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
+import com.zerobase.SelfWash.customer.search.service.SearchStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,29 @@ public class SearchStoreController {
       @RequestParam double latitude,
       @RequestParam double longitude) {
 
-      if (searchStoreService.searchStore(latitude, longitude).isEmpty()) {
+      List<SearchStoreDto> searchStoreDtos = searchStoreService.searchStore(latitude, longitude);
+
+      if (searchStoreDtos.isEmpty()) {
         return ResponseEntity.ok("주변 매장이 존재하지 않습니다.");
       }
 
-      return ResponseEntity.ok(searchStoreService.searchStore(latitude, longitude));
+      return ResponseEntity.ok(searchStoreDtos);
   }
 
+  @Operation(
+      summary = "매장 기계 조회",
+      tags = {"매장 조회"}
+  )
+  @GetMapping("/machine")
+  public ResponseEntity<?> findStore(
+      @RequestParam Long storeId) {
+
+    List<SearchMachineDto> machines = searchStoreService.searchMachine(storeId);
+
+    if (machines.isEmpty()) {
+      return ResponseEntity.ok("주변 매장이 존재하지 않습니다.");
+    }
+
+    return ResponseEntity.ok(machines);
+  }
 }

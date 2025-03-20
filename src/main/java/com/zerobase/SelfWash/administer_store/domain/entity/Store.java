@@ -87,9 +87,10 @@ public class Store extends BaseEntity {
   }
 
   // 연관관계 설정에 따라서 부모 엔티티 변경에 따른 자식 엔티티 동기화를 위한 메서드
-  public void addMachine (Machine machine) {
+  public Machine addMachine (Machine machine) {
     machines.add(machine);
     machine.setStore(this);
+    return machine;
   }
 
   public void removeMachine (Machine machine) {
@@ -102,4 +103,6 @@ public class Store extends BaseEntity {
     GeometryFactory geometryFactory = new GeometryFactory();
     return geometryFactory.createPoint(new Coordinate(longitude, latitude));
   }
+
+
 }

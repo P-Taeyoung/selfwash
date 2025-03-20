@@ -1,4 +1,4 @@
-package com.zerobase.SelfWash.customer.search_store.dto;
+package com.zerobase.SelfWash.customer.search.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

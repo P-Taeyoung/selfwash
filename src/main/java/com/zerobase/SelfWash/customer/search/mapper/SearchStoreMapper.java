@@ -1,6 +1,7 @@
-package com.zerobase.SelfWash.customer.search_store.mapper;
+package com.zerobase.SelfWash.customer.search.mapper;
 
-import com.zerobase.SelfWash.customer.search_store.dto.SearchStoreDto;
+import com.zerobase.SelfWash.customer.search.dto.SearchMachineDto;
+import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

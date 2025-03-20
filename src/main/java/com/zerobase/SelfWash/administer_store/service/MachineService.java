@@ -2,6 +2,7 @@ package com.zerobase.SelfWash.administer_store.service;
 
 import com.zerobase.SelfWash.administer_store.domain.dto.MachineDto;
 import com.zerobase.SelfWash.administer_store.domain.form.MachineForm;
+import com.zerobase.SelfWash.administer_store.domain.type.UsageStatus;
 
 public interface MachineService {
 
@@ -22,6 +23,9 @@ public interface MachineService {
 
   //기계 정보 수정
   void modify(Long machineId, MachineForm form);
+
+  //기계 상태 변경
+  void change(Long machineId, UsageStatus status);
 
 
 

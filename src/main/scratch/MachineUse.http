@@ -1,0 +1,11 @@
+### 고객 회원정보 수정
+PUT http://localhost:8080/use?customerId=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNM0lYSW5MaDZwTG1YU2t4WFNGczNlUE1KbDFHSUNBYllOdlFlVUtzMGJZPSIsImp0aSI6IkNtWUR2NU1LNVlVeWlrOEtHTkR3b3c9PSIsInJvbGVzIjoiT1dORVIiLCJpYXQiOjE3NDIyMTU1OTUsImV4cCI6MTc0MjMwMTk5NX0.9NuFRp2x1g_e8ruB9xMX0zfRHYh_OLwIVgNJ4lwKCfc
+
+{
+  "machineId": 1,
+  "washingCourse": "NORMAL"
+}
+
+

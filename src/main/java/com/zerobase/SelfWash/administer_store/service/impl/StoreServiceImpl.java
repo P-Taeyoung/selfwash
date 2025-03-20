@@ -5,6 +5,7 @@ import com.zerobase.SelfWash.administer_store.domain.entity.Store;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreForm;
 import com.zerobase.SelfWash.administer_store.domain.form.StoreModifyForm;
 import com.zerobase.SelfWash.administer_store.domain.repository.StoreRepository;
+import com.zerobase.SelfWash.administer_store.service.RedisManageService;
 import com.zerobase.SelfWash.administer_store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,11 @@ public class StoreServiceImpl implements StoreService {
   @Override
   @Transactional
   public StoreDto create(StoreForm form) {
+    //위도, 경도 정보 유효성 검사
+    if (!RedisManageServiceImpl.isValidGeoCoordinates(form.getLongitude(), form.getLatitude())) {
+      throw new RuntimeException("유효한 위도 경도 값이 아닙니다.");
+    }
+
     return StoreDto.from(storeRepository.save(Store.from(form)));
   }
 

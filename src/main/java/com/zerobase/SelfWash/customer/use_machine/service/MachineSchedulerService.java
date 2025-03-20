@@ -2,8 +2,10 @@ package com.zerobase.SelfWash.customer.use_machine.service;
 
 import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.USABLE;
 
+import com.zerobase.SelfWash.administer_store.domain.dto.MachineRedisDto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Machine;
 import com.zerobase.SelfWash.administer_store.domain.repository.MachineRepository;
+import com.zerobase.SelfWash.administer_store.service.RedisManageService;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class MachineSchedulerService {
 
   private final MachineRepository machineRepository;
+  private final RedisManageService redisManageService;
 
   @Scheduled(cron = "0 * * * * *")
   public void updateMachineStatus() {
@@ -57,6 +60,12 @@ public class MachineSchedulerService {
       machine.setEndTime(null);
       machine.setCustomerId(null);
       machine.setUsageStatus(USABLE);
+
+      // 상태 변경 시 레디스에도 업데이트
+      redisManageService.addAndUpdateMachineToRedis(
+          machine.getStore().getId(),
+          MachineRedisDto.toDto(machine));
+
       log.info("상태 업데이트 기계 ID  : {}", machine.getId());
     }
     machineRepository.saveAll(machinePage.getContent());

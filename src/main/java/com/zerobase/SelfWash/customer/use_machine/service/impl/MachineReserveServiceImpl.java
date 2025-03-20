@@ -5,8 +5,10 @@ import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.UNU
 import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.USABLE;
 import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.USING;
 
+import com.zerobase.SelfWash.administer_store.domain.dto.MachineRedisDto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Machine;
 import com.zerobase.SelfWash.administer_store.domain.repository.MachineRepository;
+import com.zerobase.SelfWash.administer_store.service.RedisManageService;
 import com.zerobase.SelfWash.customer.use_machine.domain.dto.MachineReserveDto;
 import com.zerobase.SelfWash.customer.use_machine.domain.dto.MachineUseDto;
 import com.zerobase.SelfWash.customer.use_machine.domain.entity.MachineReserve;
@@ -28,6 +30,8 @@ public class MachineReserveServiceImpl implements MachineReserveService {
 
   private final MachineReserveRepository machineReserveRepository;
   private final MachineRepository machineRepository;
+  private final RedisManageService redisManageService;
+
 
   @Override
   @Transactional
@@ -49,6 +53,11 @@ public class MachineReserveServiceImpl implements MachineReserveService {
     machine.setEndTime(machineReserve.getEndTime());
     machine.setCustomerId(customerId);
     machine.setUsageStatus(RESERVED);
+
+    //레디스에도 적용
+    redisManageService.addAndUpdateMachineToRedis(
+        machine.getStore().getId(),
+        MachineRedisDto.toDto(machine));
 
     return MachineReserveDto.from(machineReserve);
   }
@@ -74,6 +83,11 @@ public class MachineReserveServiceImpl implements MachineReserveService {
     machine.setEndTime(null);
     machine.setCustomerId(null);
     machine.setUsageStatus(USABLE);
+
+    //레디스에도 적용
+    redisManageService.addAndUpdateMachineToRedis(
+        machine.getStore().getId(),
+        MachineRedisDto.toDto(machine));
 
     machineReserveRepository.delete(machineReserve);
   }

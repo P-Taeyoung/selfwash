@@ -4,12 +4,12 @@ import com.zerobase.SelfWash.customer.use_machine.domain.dto.MachineUseDto;
 import com.zerobase.SelfWash.customer.use_machine.domain.form.MachineUseForm;
 import com.zerobase.SelfWash.customer.use_machine.service.MachineUseService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/use")
 @RequiredArgsConstructor
+@Slf4j
 public class MachineUseController {
 
   private final MachineUseService machineUseService;
@@ -36,7 +37,8 @@ public class MachineUseController {
       summary = "기계 사용 종료",
       tags = {"기계 사용"}
   )
-  @PutMapping
+
+  @PutMapping("/finish")
   public ResponseEntity<String> finish(
       @RequestParam Long machineId
   ) {

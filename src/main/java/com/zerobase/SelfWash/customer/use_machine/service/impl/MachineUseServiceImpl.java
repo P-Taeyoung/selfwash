@@ -5,15 +5,13 @@ import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.UNU
 import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.USABLE;
 import static com.zerobase.SelfWash.administer_store.domain.type.UsageStatus.USING;
 
+import com.zerobase.SelfWash.administer_store.domain.dto.MachineRedisDto;
 import com.zerobase.SelfWash.administer_store.domain.entity.Machine;
 import com.zerobase.SelfWash.administer_store.domain.repository.MachineRepository;
-import com.zerobase.SelfWash.administer_store.domain.type.UsageStatus;
-import com.zerobase.SelfWash.customer.use_machine.domain.dto.MachineReserveDto;
+import com.zerobase.SelfWash.administer_store.service.RedisManageService;
 import com.zerobase.SelfWash.customer.use_machine.domain.dto.MachineUseDto;
-import com.zerobase.SelfWash.customer.use_machine.domain.entity.MachineReserve;
 import com.zerobase.SelfWash.customer.use_machine.domain.entity.MachineUse;
 import com.zerobase.SelfWash.customer.use_machine.domain.form.MachineUseForm;
-import com.zerobase.SelfWash.customer.use_machine.domain.repository.MachineReserveRepository;
 import com.zerobase.SelfWash.customer.use_machine.domain.repository.MachineUseRepository;
 import com.zerobase.SelfWash.customer.use_machine.service.MachineUseService;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +26,14 @@ public class MachineUseServiceImpl implements MachineUseService {
 
   private final MachineUseRepository machineUseRepository;
   private final MachineRepository machineRepository;
+  private final RedisManageService redisManageService;
 
   @Override
   @Transactional
   public MachineUseDto use(Long customerId, MachineUseForm form) {
+    log.info("machine Id : {}", form.getMachineId());
     Machine machine = machineRepository.findById(form.getMachineId())
-        .orElseThrow(() -> new RuntimeException("해당하는 기계 정보가 없습니다."));
+        .orElseThrow(() ->  new RuntimeException("해당하는 기계 정보가 없습니다."));
 
     if (!usableMachine(customerId, machine)) {
       throw new RuntimeException("사용 불가능한 기계입니다.");
@@ -44,6 +44,11 @@ public class MachineUseServiceImpl implements MachineUseService {
     // 기계DB 사용정보 업데이트
     machine.setEndTime(machineUse.getEndTime());
     machine.setUsageStatus(USING);
+
+    // 레디스도 업데이트
+    redisManageService.addAndUpdateMachineToRedis(
+        machine.getStore().getId(),
+        MachineRedisDto.toDto(machine));
 
     return MachineUseDto.from(machineUse);
   }
@@ -57,6 +62,11 @@ public class MachineUseServiceImpl implements MachineUseService {
     // 기계DB 사용 가능 상태로 업데이트
     machine.setEndTime(null);
     machine.setUsageStatus(USABLE);
+
+    // 레디스도 업데이트
+    redisManageService.addAndUpdateMachineToRedis(
+        machine.getStore().getId(),
+        MachineRedisDto.toDto(machine));
   }
 
   private boolean usableMachine(Long customerId, Machine machine) {

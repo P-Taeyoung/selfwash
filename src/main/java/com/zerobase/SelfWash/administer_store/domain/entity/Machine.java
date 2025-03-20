@@ -13,11 +13,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.jpa.repository.Query;
 
 @Entity
 @Getter
@@ -43,6 +46,12 @@ public class Machine extends BaseEntity {
   //사용현황
   @Enumerated(EnumType.STRING)
   private UsageStatus usageStatus;
+
+  //기계 사용&에약 종료 시간
+  private LocalDateTime endTime;
+  //예약자 Id
+  private Long customerId;
+
   //비고
   private String notes;
   //삭제예정데이터
@@ -65,4 +74,8 @@ public class Machine extends BaseEntity {
     this.setNotes(form.getNotes());
   }
 
+  //분 단위로 저장
+  public void setEndTime(LocalDateTime endTime) {
+    this.endTime = endTime != null ? endTime.truncatedTo(ChronoUnit.MINUTES) : null;
+  }
 }

@@ -1,6 +1,6 @@
 package com.zerobase.SelfWash.administer_store.service;
 
-import com.zerobase.SelfWash.customer.search_store.dto.SearchStoreDto;
+import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
 import java.util.List;
 
 public interface ManageStoreService {
@@ -10,9 +10,5 @@ public interface ManageStoreService {
    */
   void storeOperationChange(Long storeId);
 
-  /**
-   * 설정 위치 주변 500M 내 매장 조회 (레디스에서 정보 조회)
-   */
-  List<SearchStoreDto> getNearbyStoresWithDetails(double latitude, double longitude);
 
 }
