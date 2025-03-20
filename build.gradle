@@ -32,6 +32,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-mail"
 	implementation 'org.hibernate:hibernate-spatial:6.4.1.Final'
 	implementation 'org.locationtech.jts:jts-core:1.19.0'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
 

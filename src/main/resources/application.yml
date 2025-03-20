@@ -38,3 +38,7 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+
+kakao:
+  api:
+    key: ${KAKAO_API_KEY}
