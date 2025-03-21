@@ -2,8 +2,8 @@ package com.zerobase.SelfWash.administer_store.service;
 
 import com.zerobase.SelfWash.administer_store.domain.dto.MachineRedisDto;
 import com.zerobase.SelfWash.administer_store.domain.dto.StoreRedisDto;
-import com.zerobase.SelfWash.customer.search.dto.SearchMachineDto;
-import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
+import com.zerobase.SelfWash.search_store.dto.SearchMachineDto;
+import com.zerobase.SelfWash.search_store.dto.SearchStoreDto;
 import java.util.List;
 
 public interface RedisManageService {

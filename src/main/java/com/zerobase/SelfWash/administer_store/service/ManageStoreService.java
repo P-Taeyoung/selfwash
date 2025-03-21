@@ -1,8 +1,5 @@
 package com.zerobase.SelfWash.administer_store.service;
 
-import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
-import java.util.List;
-
 public interface ManageStoreService {
 
   /**

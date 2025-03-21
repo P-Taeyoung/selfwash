@@ -6,8 +6,6 @@ import com.zerobase.SelfWash.administer_store.domain.entity.Store;
 import com.zerobase.SelfWash.administer_store.domain.repository.StoreRepository;
 import com.zerobase.SelfWash.administer_store.service.ManageStoreService;
 import com.zerobase.SelfWash.administer_store.service.RedisManageService;
-import com.zerobase.SelfWash.customer.search.dto.SearchStoreDto;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
